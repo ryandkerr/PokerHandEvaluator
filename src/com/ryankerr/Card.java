@@ -1,6 +1,6 @@
 package com.ryankerr;
 
-public class Card implements Comparable<Card> {
+public class Card {
   private char rank;
   private char suit;
 
@@ -21,9 +21,7 @@ public class Card implements Comparable<Card> {
     return card.getRank() == this.getRank() && card.getSuit() == this.getSuit();
   }
 
-  @Override
-  public int compareTo(Card card) {
-    // TODO: implement
-    return 0;
+  public String toString() {
+    return "" + this.getRank() + this.getSuit();
   }
 }

@@ -13,6 +13,19 @@ public class FiveCardHand implements Comparable<FiveCardHand> {
     this.evaluateHand();
   }
 
+  public FiveCardHand(char[] ranks, char[] suits) {
+    assert ranks.length == 5;
+    assert suits.length == 5;
+    ArrayList<Card> out = new ArrayList<>();
+    for (int i = 0; i < 5; i++) {
+      out.add(new Card(ranks[i], suits[i]));
+    }
+
+    this.cards = (List<Card>) out.clone();
+    this.evaluation = new StringBuilder("0000000000000000000000");
+    this.evaluateHand();
+  }
+
   @Override
   public int compareTo(FiveCardHand hand) {
     return this.evaluation.compareTo(new StringBuilder(hand.getEvaluation()));
@@ -26,9 +39,16 @@ public class FiveCardHand implements Comparable<FiveCardHand> {
     return this.evaluation.toString();
   }
 
+  public String toString() {
+    List<String> cardStrings = this.cards.stream()
+            .map(x -> x.toString())
+            .collect(Collectors.toList());
+    return String.join(", ", cardStrings);
+  }
+
 
   private void evaluateHand() {
-    // create histogram of ranks
+    // create a map that counts how many times each rank appears
     List<Integer> ranksSorted = this.cards.stream()
             .map(x -> rankToInt(x.getRank()))
             .collect(Collectors.toList());
@@ -129,7 +149,8 @@ public class FiveCardHand implements Comparable<FiveCardHand> {
       if ((ranksSorted.get(0) - ranksSorted.get(4) == 4)) {
         isStraight = true;
         straightRank = ranksSorted.get(0);
-      } else if (ranksSorted.get(0) == 14 && ranksSorted.get(1) == 5) {  // catches Ace-to-5 straights
+      } else if (ranksSorted.get(0) == 14 && ranksSorted.get(1) == 5) {  // catches Ace-to-5
+        // straights
         isStraight = true;
         straightRank = 5;
       }
@@ -138,7 +159,8 @@ public class FiveCardHand implements Comparable<FiveCardHand> {
       // check for flush
       boolean isFlush = false;
       int flushRank = 0;
-      List<Character> suits = this.cards.stream().map(x -> x.getSuit()).collect(Collectors.toList());
+      List<Character> suits =
+              this.cards.stream().map(x -> x.getSuit()).collect(Collectors.toList());
       HashSet<Character> uniqueSuits = new HashSet<Character>(suits);
       if (uniqueSuits.size() == 1) {
         isFlush = true;

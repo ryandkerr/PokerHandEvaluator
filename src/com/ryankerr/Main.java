@@ -61,41 +61,7 @@ public class Main {
 
     char[] ranks = {'A', 'A', 'A', 'A', 'T'};
     char[] suits = {'S', 'D', 'H', 'C', 'S'};
-    ArrayList<Card> h1 = createHand(ranks, suits);
-    FiveCardHand hand1 = new FiveCardHand(h1);
+    FiveCardHand hand1 = new FiveCardHand(ranks, suits);
     System.out.println(hand1.getEvaluation());
   }
-
-  // given a list of cards, recursively finds the best 5-card hand
-  private FiveCardHand findBestHand(ArrayList<Card> cards) {
-    if (cards.size() == 5) {
-      FiveCardHand hand = new FiveCardHand(cards);
-      return hand;
-    }
-
-    FiveCardHand bestHand = null;
-    for (int i = 0; i < cards.size(); i++) {
-      ArrayList<Card> cardsClone = (ArrayList<Card>) cards.clone();
-      cardsClone.remove(i);
-      FiveCardHand hand = findBestHand(cardsClone);
-      if (bestHand == null) {
-        bestHand = hand;
-      } else if (hand.compareTo(bestHand) > 0) {
-        bestHand = hand;
-      }
-    }
-    return bestHand;
-  }
-
-  // helper function to create lists of cards quickly
-  private static ArrayList<Card> createHand(char[] ranks, char[] suits) {
-    assert ranks.length == 5;
-    assert suits.length == 5;
-    ArrayList<Card> out = new ArrayList<>();
-    for (int i = 0; i < 5; i++) {
-      out.add(new Card(ranks[i], suits[i]));
-    }
-    return out;
-  }
-
 }
