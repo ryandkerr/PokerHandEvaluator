@@ -1,10 +1,9 @@
 package com.ryankerr;
 
-import com.sun.security.jgss.GSSUtil;
 import org.junit.jupiter.api.Test;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,6 +28,25 @@ class HandEvaluatorTest {
     ArrayList<Card> cards = createCardList(ranks, noFlush);
     FiveCardHand bestHand = HandEvaluator.findBestHand(cards);
     System.out.println(bestHand);
+  }
+
+  @Test
+  void calculateWinProbabilityTest() {
+    ArrayList<Card> h1 = new ArrayList<>(Arrays.asList(new Card('A', 'S'), new Card('K', 'D')));
+    ArrayList<Card> h2 = new ArrayList<>(Arrays.asList(new Card('4', 'S'), new Card('4', 'D')));
+    ArrayList<ArrayList<Card>> hands = new ArrayList<>(Arrays.asList(h1, h2));
+
+    ArrayList<Card> tableCards = new ArrayList<>(Arrays.asList(
+//            new Card('J', 'C')
+//            new Card('T', 'H')
+//            new Card('6', 'D')
+//            new Card('4', 'S')
+            ));
+    float[] result = HandEvaluator.calculateWinProbability(hands, tableCards);
+
+    for (float f : result) {
+      System.out.println(f);
+    }
   }
 
   private ArrayList<Card> createCardList(char[] ranks, char[] suits) {
