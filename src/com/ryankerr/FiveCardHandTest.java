@@ -7,16 +7,16 @@ import static org.junit.jupiter.api.Assertions.*;
 class FiveCardHandTest {
 
   @Test
-  void flushGreaterThanStraight() {
+  void flushTieBreaker() {
     char[] flushRanks = {'T', '9', '7', '6', '2'};
     char[] flushSuits = {'D', 'D', 'D', 'D', 'D'};
     FiveCardHand flushHand = new FiveCardHand(flushRanks, flushSuits);
 
-    char[] straightRanks = {'K', 'Q', '9', 'T', 'J'};
-    char[] straightSuits = {'D', 'D', 'D', 'D', 'S'};
-    FiveCardHand straightHand = new FiveCardHand(straightRanks, straightSuits);
-    assertTrue(flushHand.compareTo(straightHand) > 0);
-    assertTrue(straightHand.compareTo(flushHand) < 0);
+    char[] flushHigherRanks = {'T', '9', '7', '6', '3'};
+    char[] flushHigherSuits = {'D', 'D', 'D', 'D', 'D'};
+    FiveCardHand flushHigherHand = new FiveCardHand(flushHigherRanks, flushHigherSuits);
+    assertTrue(flushHand.compareTo(flushHigherHand) < 0);
+    assertTrue(flushHigherHand.compareTo(flushHand) > 0);
   }
 
   @Test

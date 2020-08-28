@@ -28,36 +28,6 @@ public class HandEvaluator {
     return bestHand;
   }
 
-  public static ArrayList<ArrayList<Card>> generateHands(ArrayList<Card> handCards,
-                                                         ArrayList<Card> tableCards) {
-    ArrayList<Card> cardsNotInDeck = new ArrayList<>();
-    cardsNotInDeck.addAll(handCards);
-    cardsNotInDeck.addAll(tableCards);
-
-    return generateHands(cardsNotInDeck, 5 - tableCards.size());
-  }
-
-  public static ArrayList<ArrayList<Card>> generateHands(ArrayList<Card> cardsNotInDeck,
-                                                         int numCardsToGenerate) {
-    assert numCardsToGenerate > 0 && numCardsToGenerate <= 5;
-    Deck deck = new Deck();
-    for (Card card : cardsNotInDeck) {
-      deck.remove(card);
-    }
-
-    ArrayList<ArrayList<Card>> potentialHands = new ArrayList<>();
-    int numCards = 10;
-    Iterator<int[]> combinations = CombinatoricsUtils.combinationsIterator(numCards,
-            numCardsToGenerate);
-
-    while (combinations.hasNext()) {
-      int[] combination = combinations.next();
-
-    }
-
-    return potentialHands;
-  }
-
   // given an array of hands and an array of table cards, returns an array with the win
   // probability of each hand
   public static float[] calculateWinProbability(ArrayList<ArrayList<Card>> hands,
@@ -151,6 +121,8 @@ public class HandEvaluator {
       } else if (best.compareTo(bestHand) > 0) {
         bestHand = best;
         bestHandIndex = i;
+      } else if (best.compareTo(bestHand) == 0) {  // handle ties by returning hands.size()
+        bestHandIndex = hands.size();
       }
     }
 

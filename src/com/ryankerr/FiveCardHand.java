@@ -173,13 +173,13 @@ public class FiveCardHand implements Comparable<FiveCardHand> {
         updateEvaluation(5, flushRank);
       } else if (isStraight) {  // straight
         updateEvaluation(6, straightRank);
-      } else {  // high card
-        updateEvaluation(17, ranksSorted.get(0));
-        updateEvaluation(18, ranksSorted.get(1));
-        updateEvaluation(19, ranksSorted.get(2));
-        updateEvaluation(20, ranksSorted.get(3));
-        updateEvaluation(21, ranksSorted.get(4));
       }
+      // high card. We also do this for flush and straight because flushes need tiebreakers
+      updateEvaluation(17, ranksSorted.get(0));
+      updateEvaluation(18, ranksSorted.get(1));
+      updateEvaluation(19, ranksSorted.get(2));
+      updateEvaluation(20, ranksSorted.get(3));
+      updateEvaluation(21, ranksSorted.get(4));
     }
   }
 
